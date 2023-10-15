@@ -11,9 +11,7 @@ import HeaderComp from "./components/Header";
 import { routes } from "../config/router";
 import "antd/dist/reset.css";
 import { createFromIconfontCN } from '@ant-design/icons';
-import axios from "axios";
 import { getCaptcha } from "@/api/modules/base";
-import { url } from "inspector";
 
 const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/c/font_4280892_pybmn8s64a.js',
@@ -32,36 +30,10 @@ const BasicLayout: React.FC = () => {
   const { pathname } = useLocation();
 
   const handle = () => {
-    axios.get('http://192.168.124.15:8081/getCaptcha').then(res => {
+    getCaptcha().then(res=>{
       console.log(res);
+      
     })
-    // getCaptcha().then(res => {
-    //   console.log(res);
-    // })
-
-    // axios.request({
-    //   url: "https://cn.bing.com/search?q=http%3A%2F%2Fwww.baidu.com%2F&form=ANNTH1&refig=e937832c175348539f2ae9aa1c4c24c3",
-    //   method: 'GET',
-    //   headers: {
-    //     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJhZG1pblJvbGUiOjEsImV4cCI6MTY5Nzk2MTQ1MywidXNlcm5hbWUiOiJhZG1pbiJ9.I7euD9twlUbCMZneR_ADK_pQSa2H9UI3m10BwMYGGDo'
-    //   }
-    // }).then(res => {
-    //   console.log(res);
-    // })
-
-    // fetch('http://192.168.124.15:8081/getCaptcha').then(res => {
-    //   console.log(res);
-    // })
-
-    // const result = axios.request({
-    //   url: "http://192.168.25.1/export?group=后台",
-    //   headers: {
-    //     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJhZG1pblJvbGUiOjEsImV4cCI6MTY5Nzk2MTQ1MywidXNlcm5hbWUiOiJhZG1pbiJ9.I7euD9twlUbCMZneR_ADK_pQSa2H9UI3m10BwMYGGDo'
-    //   }
-    // })
-    // result.then(res => {
-    //   console.log(res);
-    // })
   }
 
   const {

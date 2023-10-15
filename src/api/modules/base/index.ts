@@ -1,5 +1,5 @@
 import { baseInstance } from '@/api';
-import { CaptchaParams, CaptchaRes } from './types';
+import { CaptchaRes } from './types';
 
 const { get: baseGet } = baseInstance;
 

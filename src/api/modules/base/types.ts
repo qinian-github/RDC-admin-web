@@ -1,6 +1,7 @@
-export interface CaptchaParams {
-}
-
 export interface CaptchaRes {
-  success: boolean;
+  code: 'string',
+  data: {
+    img: string,
+    uuid: string
+  }
 }

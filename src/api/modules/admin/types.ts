@@ -6,7 +6,9 @@ export interface LoginParams {
 }
 
 export interface LoginRes {
-  success: boolean;
+  code: string,
+  data: string,
+  msg: string
 }
 
 export interface RegisterParams {
@@ -18,5 +20,7 @@ export interface RegisterParams {
 }
 
 export interface RegisterRes {
-  success: boolean;
+  code: string,
+  data: string,
+  msg: string
 }

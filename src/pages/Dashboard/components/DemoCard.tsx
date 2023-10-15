@@ -26,7 +26,7 @@ const DemoCard = () => {
         />
         <StatisticCard
           statistic={{
-            title: "后台",
+            title: "后端",
             value: 0,
             icon: (<IconFont type="icon-java" style={{fontSize:40}}/>),
           }}

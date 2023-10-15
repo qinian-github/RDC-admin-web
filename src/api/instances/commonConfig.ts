@@ -13,11 +13,9 @@ if (process.env.NODE_ENV === 'production') {
 const commonRequestConfig: AxiosRequestConfig = {
   baseURL: API_DOMAIN,
   // 指定请求超时的毫秒数
-  timeout: 8000,
+  timeout: 3000,
   headers: {
     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJhZG1pblJvbGUiOjEsImV4cCI6MTY5Nzk2MTQ1MywidXNlcm5hbWUiOiJhZG1pbiJ9.I7euD9twlUbCMZneR_ADK_pQSa2H9UI3m10BwMYGGDo',
-    'Access-Control-Allow-Credentials': 'true',
-    'Access-Control-Allow-Origin': 'http://192.168.124.22:5173'
   },
   // 表示支持跨域请求携带Cookie，默认是false，表示不携带Cookie
   // 同时需要后台配合，返回需要有以下字段，
@@ -53,6 +51,7 @@ const commonResponseInterceptors: ResponseInterceptor[] = [
   {
     onFulfilled: (response: AxiosResponse) => {
       // 这里我们将后台返回的数据解构出来返回，方便后续获取
+      console.log(response);
       const { data } = response;
       return data;
       // 这里根据其它业务可以做其它特殊的拦截，比如根据后台返回的data有固定的格式，根据后台返回的code可以做一些统一处理，比如像下面这样
