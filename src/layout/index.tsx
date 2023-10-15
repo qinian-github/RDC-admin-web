@@ -1,7 +1,6 @@
 import React, { useState, Suspense } from "react";
 import {
   Outlet,
-  useLoaderData,
   useNavigate,
   NonIndexRouteObject,
   useLocation,
@@ -9,11 +8,12 @@ import {
 import { MenuProps } from "antd";
 import { Layout, Menu, theme, Spin } from "antd";
 import HeaderComp from "./components/Header";
-// import { useLoginStore } from "@stores/index";
 import { routes } from "../config/router";
-// import NoAuthPage from "@components/NoAuthPage/index";
 import "antd/dist/reset.css";
 import { createFromIconfontCN } from '@ant-design/icons';
+import axios from "axios";
+import { getCaptcha } from "@/api/modules/base";
+import { url } from "inspector";
 
 const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/c/font_4280892_pybmn8s64a.js',
@@ -31,11 +31,42 @@ const BasicLayout: React.FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  // const { userInfo } = useLoginStore();
+  const handle = () => {
+    axios.get('http://192.168.124.15:8081/getCaptcha').then(res => {
+      console.log(res);
+    })
+    // getCaptcha().then(res => {
+    //   console.log(res);
+    // })
+
+    // axios.request({
+    //   url: "https://cn.bing.com/search?q=http%3A%2F%2Fwww.baidu.com%2F&form=ANNTH1&refig=e937832c175348539f2ae9aa1c4c24c3",
+    //   method: 'GET',
+    //   headers: {
+    //     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJhZG1pblJvbGUiOjEsImV4cCI6MTY5Nzk2MTQ1MywidXNlcm5hbWUiOiJhZG1pbiJ9.I7euD9twlUbCMZneR_ADK_pQSa2H9UI3m10BwMYGGDo'
+    //   }
+    // }).then(res => {
+    //   console.log(res);
+    // })
+
+    // fetch('http://192.168.124.15:8081/getCaptcha').then(res => {
+    //   console.log(res);
+    // })
+
+    // const result = axios.request({
+    //   url: "http://192.168.25.1/export?group=后台",
+    //   headers: {
+    //     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJhZG1pblJvbGUiOjEsImV4cCI6MTY5Nzk2MTQ1MywidXNlcm5hbWUiOiJhZG1pbiJ9.I7euD9twlUbCMZneR_ADK_pQSa2H9UI3m10BwMYGGDo'
+    //   }
+    // })
+    // result.then(res => {
+    //   console.log(res);
+    // })
+  }
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  const { isAdmin } = useLoaderData() as any;
 
   const getItems: any = (children: RouteType[]) => {
     return children.map((item) => {
@@ -53,16 +84,12 @@ const BasicLayout: React.FC = () => {
   };
 
   const menuItems: MenuProps["items"] = getItems(
-    routes[0].children![0].children.filter((item) => item.path !== "*")
+    routes[0].children!.filter((item) => item.path !== "*")
   );
 
   const onMenuClick: MenuProps["onClick"] = ({ key }) => {
     navigate(key);
   };
-
-  // if (!userInfo) {
-  //   return <Navigate to="/login" replace={true} />;
-  // }
 
   const renderOpenKeys = () => {
     const arr = pathname.split("/").slice(0, -1);
@@ -113,14 +140,10 @@ const BasicLayout: React.FC = () => {
             height: `calc(100vh - 128px)`,
           }}
         >
-          {isAdmin ? (
-            <Suspense fallback={<Spin size="large" className="content_spin" />}>
-              <Outlet />
-            </Suspense>
-          ) : (
-            2
-            // <NoAuthPage />
-          )}
+          <Suspense fallback={<Spin size="large" className="content_spin" />}>
+            <button onClick={handle}>click</button>
+            <Outlet />
+          </Suspense>
         </Content>
         <Footer style={{ textAlign: "center" }}>
           RDC Admin Web ©2023

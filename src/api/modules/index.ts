@@ -1,4 +1,4 @@
-import * as shopApi from './shop';
-import * as userApi from './user';
+import * as adminApi from './admin';
+import * as baseApi from './base';
 
-export { shopApi, userApi };
+export { adminApi, baseApi  };

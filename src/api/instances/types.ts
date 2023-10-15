@@ -1,10 +1,10 @@
-import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 export type OnFulfilled<V> = ((value: V) => V | Promise<V>) | null;
 export type OnRejected = ((error: any) => any) | null;
 
 export type RequestInterceptor = {
-  onFulfilled: OnFulfilled<AxiosRequestConfig>;
+  onFulfilled: OnFulfilled<InternalAxiosRequestConfig>;
   onRejected?: OnRejected;
 };
 

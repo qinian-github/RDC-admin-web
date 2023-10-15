@@ -7,11 +7,11 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@utils": path.join(__dirname, 'utils'),
-      "@": path.join(__dirname, ''),
-      "@components": path.join(__dirname, 'components'),
-      "@stores": path.join(__dirname, 'stores'),
-      "@pages": path.join(__dirname, 'pages'),
+      "@": path.join(__dirname, 'src'),
+      "@utils": path.join(__dirname, 'src/utils'),
+      "@components": path.join(__dirname, 'src/components'),
+      "@stores": path.join(__dirname, 'src/stores'),
+      "@pages": path.join(__dirname, 'src/pages'),
     }
   }
 })

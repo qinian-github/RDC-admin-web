@@ -1,12 +1,24 @@
-import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { RequestInterceptor, ResponseInterceptor } from './types';
 import { message } from 'antd';
 
+// 开发环境地址
+let API_DOMAIN = 'http://192.168.124.15:8081/'
+if (process.env.NODE_ENV === 'production') {
+  // 正式环境地址
+  API_DOMAIN = 'http://jsonplaceholder.typicode.com'
+}
+
 // 通用请求配置
 const commonRequestConfig: AxiosRequestConfig = {
-  baseURL: '/',
+  baseURL: API_DOMAIN,
   // 指定请求超时的毫秒数
-  timeout: 3000,
+  timeout: 8000,
+  headers: {
+    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJhZG1pblJvbGUiOjEsImV4cCI6MTY5Nzk2MTQ1MywidXNlcm5hbWUiOiJhZG1pbiJ9.I7euD9twlUbCMZneR_ADK_pQSa2H9UI3m10BwMYGGDo',
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Allow-Origin': 'http://192.168.124.22:5173'
+  },
   // 表示支持跨域请求携带Cookie，默认是false，表示不携带Cookie
   // 同时需要后台配合，返回需要有以下字段，
   // 如果该字段设置为true，但是后台没有返回以下两个字段的话浏览器是会报错的
@@ -18,7 +30,7 @@ const commonRequestConfig: AxiosRequestConfig = {
 // 通用的请求拦截器
 const commonRequestInterceptors: RequestInterceptor[] = [
   {
-    onFulfilled: (config: AxiosRequestConfig) => {
+    onFulfilled: (config: InternalAxiosRequestConfig) => {
       /**
        * 在这里一般会携带前台的参数发送给后台，比如下面这段代码：
        * const token = getToken()
@@ -62,30 +74,27 @@ const commonResponseInterceptors: ResponseInterceptor[] = [
     onRejected: (error) => {
       const { response } = error;
       // 处理 HTTP 网络错误
-      let message = '';
+      let msg = '';
       // HTTP 状态码
       const status = response?.status;
       switch (status) {
         case 401:
-          message = 'token 失效，请重新登录';
+          msg = 'token 失效，请重新登录';
           // 这里可以触发退出的 action
           break;
         case 403:
-          message = '拒绝访问';
+          msg = '拒绝访问';
           break;
         case 404:
-          message = '请求地址错误';
+          msg = '请求地址错误';
           break;
         case 500:
-          message = '服务器故障';
+          msg = '服务器故障';
           break;
         default:
-          message = '网络连接故障';
+          msg = '网络连接故障';
       }
-    //   ElMessage({
-    //     message: message,
-    //     type: 'error',
-    //   });
+      message.error(msg)
       return Promise.reject(error);
     },
   },

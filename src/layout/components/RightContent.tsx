@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { setColorPrimary, setDark } from "../../stores/slices/theme";
 import { createFromIconfontCN } from '@ant-design/icons';
+import { removeUserInfo } from "@/stores/slices/auth";
 
 const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/c/font_4280892_pybmn8s64a.js',
@@ -18,7 +19,8 @@ const RightContent: React.FC = () => {
 
   const navigateTo = useNavigate()
   const logoutHandle = () => {
-    // setUserInfo(null);
+    dispatch(removeUserInfo())
+    navigateTo("/login", { replace: true });
   };
   const centerHandle = () => {
     navigateTo('/account/center')

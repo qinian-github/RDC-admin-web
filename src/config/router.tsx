@@ -1,8 +1,9 @@
-import React, { lazy } from "react";
-import ErrorPage from '../components/ErrorPage/index';
+/* eslint-disable react-refresh/only-export-components */
+import { lazy } from "react";
 import LoginPage from "../layout/components/Login";
-import App, { authLoader } from "../App";
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import App from "../App";
+import { createBrowserRouter, Navigate, redirect } from "react-router-dom";
+import { globalConfig } from "./globalConfig";
 import {
   DashboardOutlined,
   EditOutlined,
@@ -10,6 +11,7 @@ import {
   BarsOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import Permission from "@/components/Permission";
 
 const Dashboard = lazy(() => import("../pages/Dashboard"));
 const FormPage = lazy(() => import("../pages/FormPage"));
@@ -18,61 +20,77 @@ const AccountCenter = lazy(() => import("../pages/AccountPage/AccountCenter"));
 const AccountSettings = lazy(() => import("../pages/AccountPage/AccountSettings"));
 const DetailPage = lazy(() => import("../pages/DetailPage"));
 
+const LazyLoad = (Component: React.LazyExoticComponent<React.FC>, code?: string) => {
+  return (
+    <Permission code={code}>
+      <Component />
+    </Permission>
+  )
+}
+
+const rootLoader = async () => {
+  const isLogin = localStorage.getItem(globalConfig.SESSION_LOGIN_INFO) ? true : false
+  if (!isLogin) {
+    return redirect('/login')
+  }
+  return {
+    isAdmin: true,
+  }
+}
+
 const routes = [
   {
     path: "/",
+    id: 'root',
     element: <App />,
-    loader: authLoader,
+    loader: rootLoader,
+    name: "menuRoutes",
     children: [
       {
-        errorElement: <ErrorPage />,
+        index: true,
+        path: '/',
+        title: "Dashboard",
+        icon: <DashboardOutlined />,
+        element: LazyLoad(Dashboard),
+      },
+      {
+        path: "/form",
+        title: "表单页",
+        icon: <EditOutlined />,
+        element: LazyLoad(FormPage),
+      },
+      {
+        path: "/table",
+        title: "列表页",
+        icon: <TableOutlined />,
+        element: LazyLoad(TablePage),
+      },
+      {
+        path: "/detail",
+        title: "详情页",
+        icon: <BarsOutlined />,
+        element: LazyLoad(DetailPage),
+      },
+      {
+        path: "/account",
+        title: "个人页",
+        icon: <UserOutlined />,
         children: [
           {
-            index: true,
-            title: "Dashboard",
-            icon: <DashboardOutlined />,
-            element: <Dashboard />,
+            path: "/account/center",
+            title: "个人中心",
+            element: LazyLoad(AccountCenter),
           },
           {
-            path: "form",
-            title: "表单页",
-            icon: <EditOutlined />,
-            element: <FormPage />,
-          },
-          {
-            path: "table",
-            title: "列表页",
-            icon: <TableOutlined />,
-            element: <TablePage />,
-          },
-          {
-            path: "detail",
-            title: "详情页",
-            icon: <BarsOutlined />,
-            element: <DetailPage />,
-          },
-          {
-            path: "account",
-            title: "个人页",
-            icon: <UserOutlined />,
-            children: [
-              {
-                path: "/account/center",
-                title: "个人中心",
-                element: <AccountCenter />,
-              },
-              {
-                path: "/account/settings",
-                title: "个人设置",
-                element: <AccountSettings />,
-              },
-            ],
-          },
-          {
-            path: "*",
-            element: <Navigate to="/" replace={true} />,
+            path: "/account/settings",
+            title: "个人设置",
+            element: LazyLoad(AccountSettings),
           },
         ],
+      },
+      {
+        path: "*",
+        element: <Navigate to="/" replace={true} />,
       },
     ],
   },
@@ -84,4 +102,6 @@ const routes = [
 
 export { routes };
 
-export default createBrowserRouter(routes);
+const globalBorwserRouter = createBrowserRouter(routes)
+
+export default globalBorwserRouter;

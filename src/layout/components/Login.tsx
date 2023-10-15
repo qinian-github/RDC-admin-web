@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   LockOutlined,
   UserOutlined,
@@ -8,7 +8,10 @@ import {
   LoginFormPage,
   ProFormText,
 } from "@ant-design/pro-components";
+import { useSelector, useDispatch } from 'react-redux'
 import { message, Tabs } from "antd";
+import { setUserInfo } from "@/stores/slices/auth";
+
 
 type LoginType = "phone" | "account";
 
@@ -18,13 +21,22 @@ function delay(ms: number) {
 
 const Login = () => {
   const [loginType, setLoginType] = useState<LoginType>("account");
-  //   const { setUserInfo } = useLoginStore();
+  const userInfo = useSelector((state: any) => state.auth);
+  const dispatch = useDispatch()
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(userInfo.username){
+      navigate("/", { replace: true });
+    }
+  })
+
   const onFinish = (values: unknown) => {
     return delay(1000).then(() => {
       message.success("登录成功🎉🎉🎉");
-      //   setUserInfo(values);
+      console.log(userInfo);
       console.log(values);
+      dispatch(setUserInfo(values))
 
       navigate("/", { replace: true });
     });
