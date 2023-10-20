@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react";
-import { Avatar, Dropdown, MenuProps, Button, Input, Badge, Space } from "antd";
+import { Avatar, Dropdown, MenuProps, Button, Input, Badge, Space, message } from "antd";
 import { SkinOutlined, BellOutlined } from "@ant-design/icons";
 import { debounce } from "../../utils/func";
 import styles from "../index.module.scss";
@@ -19,7 +19,8 @@ const RightContent: React.FC = () => {
 
   const navigateTo = useNavigate()
   const logoutHandle = () => {
-    dispatch(removeUserInfo())
+    message.success("成功退出登录")
+    dispatch(removeUserInfo({}))
     navigateTo("/login", { replace: true });
   };
   const centerHandle = () => {
@@ -76,7 +77,7 @@ const RightContent: React.FC = () => {
       </div>
       <Dropdown menu={{ items }} placement="bottomRight">
         <Avatar
-          src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"
+          src="https://img.ixintu.com/download/jpg/20200815/18ae766809ff27de6b7a942d7ea4111c_512_512.jpg!bg"
           style={{ cursor: "pointer" }}
         />
       </Dropdown>

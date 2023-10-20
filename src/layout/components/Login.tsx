@@ -25,7 +25,7 @@ function delay(ms: number) {
 
 const Login = () => {
   const [loginType, setLoginType] = useState<LoginType>("login");
-  const [captcha, setCaptcha] = useState('https://ts1.cn.mm.bing.net/th/id/R-C.2c1de1f078a7d4bdb67ea420bac10ae9?rik=lO0B7c2ar%2fNgzA&riu=http%3a%2f%2fwww.gift2n.com%2findex.php%2fPublic%2fverify.html&ehk=1lX6iBcIhAgPgPUhIZljLeeRVD15LbrulFJOh72%2fDuw%3d&risl=&pid=ImgRaw&r=0')
+  const [captcha, setCaptcha] = useState('')
   const userInfo = useSelector((state: any) => state.auth);
   const [uuid, setUuid] = useState('');
   const dispatch = useDispatch()
@@ -33,16 +33,17 @@ const Login = () => {
 
   const refreshCaptcha = async () => {
     const { data } = await getCaptcha()
+    message.success("成功刷新验证码")
     setCaptcha(data.img)
     setUuid(data.uuid)
   }
 
   useEffect(() => {
-    if (userInfo.username) {
+    if (userInfo.token) {
       navigate("/", { replace: true });
     }
     refreshCaptcha()
-  })
+  }, [navigate, userInfo.token])
 
   const onFinish = (values: any) => {
     if (loginType === 'login') {
@@ -50,20 +51,29 @@ const Login = () => {
       const params: LoginParams = { username, password, code, uuid }
       return delay(1000).then(() => {
         login(params).then((res: LoginRes) => {
-          if (res.code === '200') {
+          if (res.code == 200) {
             message.success("登录成功🎉🎉🎉");
-            dispatch(setUserInfo({ username }))
+            dispatch(setUserInfo(res.data))
             navigate("/", { replace: true });
+          } else {
+            const errorMsg = res.msg.substring(5);
+            message.error(errorMsg)
           }
         })
       })
     } else {
-      const { loginUsername: username, loginPassword: password, loginCaptcha: code, roleSelect: roleId } = values
-      const params: RegisterParams = { username, password, code, uuid, roleId }
+      // eslint-disable-next-line prefer-const
+      let { registerUsername: username, registerPassword: password, registerCaptcha: code, roleSelect: roleId } = values
+      roleId = Number(roleId)
+      const params: RegisterParams = { username, password, code, roleId, uuid, }
       return delay(1000).then(() => {
         register(params).then((res: RegisterRes) => {
-          if (res.code === '200') {
+          if (res.code == '200') {
             message.success("注册成功🎉🎉🎉");
+            setLoginType('login')
+          } else {
+            const errorMsg = res.msg.substring(5);
+            message.error(errorMsg)
           }
         })
       })
@@ -83,6 +93,10 @@ const Login = () => {
         onFinish={onFinish}
         title="RDC-Admin-Web"
         subTitle="后台管理系统"
+        containerStyle={{
+          backgroundColor: 'AppWorkspace',
+          opacity: 0.8
+        }}
       >
         <Tabs
           centered
@@ -146,7 +160,7 @@ const Login = () => {
                   },
                 ]}
               />
-              <img onClick={refreshCaptcha} src={captcha} style={{ flexGrow: 1, height: 40, padding: 5 }} alt="" />
+              <img onClick={refreshCaptcha} src={`data:image/jpg;base64,${captcha}`} style={{ flexGrow: 1, height: 40, padding: 2 }} alt="" />
             </div>
           </>
         )}
@@ -183,11 +197,11 @@ const Login = () => {
             <ProFormSelect
               name="roleSelect"
               valueEnum={{
-                0: ' 前端',
-                1: ' 后端',
-                2: ' 安卓',
-                3: ' UI',
-                4: ' AI',
+                2: ' 前端',
+                3: ' 后端',
+                4: ' 安卓',
+                5: ' UI',
+                6: ' AI',
               }}
               fieldProps={{
                 size: "large",
@@ -211,7 +225,7 @@ const Login = () => {
                   },
                 ]}
               />
-              <img onClick={refreshCaptcha} src={captcha} style={{ flexGrow: 1, height: 40, padding: 5 }} alt="" />
+              <img onClick={refreshCaptcha} src={`data:image/jpg;base64,${captcha}`} style={{ flexGrow: 1, height: 40, padding: 2, border: 0 }} alt="code" />
             </div>
           </>
         )}

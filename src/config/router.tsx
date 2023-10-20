@@ -5,7 +5,7 @@ import App from "../App";
 import { createBrowserRouter, Navigate, redirect } from "react-router-dom";
 import { globalConfig } from "./globalConfig";
 import {
-  DashboardOutlined,
+  HomeOutlined,
   EditOutlined,
   TableOutlined,
   BarsOutlined,
@@ -13,7 +13,7 @@ import {
 } from "@ant-design/icons";
 import Permission from "@/components/Permission";
 
-const Dashboard = lazy(() => import("../pages/Dashboard"));
+const Home = lazy(() => import("../pages/Home"));
 const FormPage = lazy(() => import("../pages/FormPage"));
 const TablePage = lazy(() => import("../pages/TablePage"));
 const AccountCenter = lazy(() => import("../pages/AccountPage/AccountCenter"));
@@ -49,9 +49,9 @@ const routes = [
       {
         index: true,
         path: '/',
-        title: "Dashboard",
-        icon: <DashboardOutlined />,
-        element: LazyLoad(Dashboard),
+        title: "首页",
+        icon: <HomeOutlined />,
+        element: LazyLoad(Home),
       },
       {
         path: "/form",

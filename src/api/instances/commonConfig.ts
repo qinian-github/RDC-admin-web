@@ -2,17 +2,14 @@ import type { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } fr
 import { RequestInterceptor, ResponseInterceptor } from './types';
 import { message } from 'antd';
 
-// 开发环境地址
-let API_DOMAIN = 'http://192.168.124.15:8081/'
+export let API_DOMAIN = 'https://rdc2022.club/manage'
 if (process.env.NODE_ENV === 'production') {
-  // 正式环境地址
-  API_DOMAIN = 'http://jsonplaceholder.typicode.com'
+  API_DOMAIN = 'https://rdc2022.club/manage'
 }
 
 // 通用请求配置
 const commonRequestConfig: AxiosRequestConfig = {
   baseURL: API_DOMAIN,
-  // 指定请求超时的毫秒数
   timeout: 3000,
   headers: {
     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJhZG1pblJvbGUiOjEsImV4cCI6MTY5Nzk2MTQ1MywidXNlcm5hbWUiOiJhZG1pbiJ9.I7euD9twlUbCMZneR_ADK_pQSa2H9UI3m10BwMYGGDo',
@@ -51,7 +48,6 @@ const commonResponseInterceptors: ResponseInterceptor[] = [
   {
     onFulfilled: (response: AxiosResponse) => {
       // 这里我们将后台返回的数据解构出来返回，方便后续获取
-      console.log(response);
       const { data } = response;
       return data;
       // 这里根据其它业务可以做其它特殊的拦截，比如根据后台返回的data有固定的格式，根据后台返回的code可以做一些统一处理，比如像下面这样

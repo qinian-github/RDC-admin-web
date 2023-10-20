@@ -1,7 +1,7 @@
 import React from "react";
 import DemoCard from "./components/DemoCard";
 
-const Dashboard: React.FC = () => {
+const Home: React.FC = () => {
   return (
     <React.Fragment>
       <DemoCard />
@@ -9,4 +9,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default Home;

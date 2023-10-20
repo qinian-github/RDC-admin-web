@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from "react";
+import React, { useState, Suspense, useEffect } from "react";
 import {
   Outlet,
   useNavigate,
@@ -11,7 +11,7 @@ import HeaderComp from "./components/Header";
 import { routes } from "../config/router";
 import "antd/dist/reset.css";
 import { createFromIconfontCN } from '@ant-design/icons';
-import { getCaptcha } from "@/api/modules/base";
+import axios from "axios";
 
 const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/c/font_4280892_pybmn8s64a.js',
@@ -28,17 +28,19 @@ const BasicLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
-
-  const handle = () => {
-    getCaptcha().then(res=>{
-      console.log(res);
-      
-    })
-  }
-
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  useEffect(() => {
+    axios.get('https://rdc2022.club/manage/export?group=前端', {
+      headers: {
+        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJhZG1pblJvbGUiOjEsImV4cCI6MTY5Nzk2MTQ1MywidXNlcm5hbWUiOiJhZG1pbiJ9.I7euD9twlUbCMZneR_ADK_pQSa2H9UI3m10BwMYGGDo',
+      }
+    }).then(res => {
+      console.log(res);
+    })
+  }, [])
 
   const getItems: any = (children: RouteType[]) => {
     return children.map((item) => {
@@ -113,7 +115,6 @@ const BasicLayout: React.FC = () => {
           }}
         >
           <Suspense fallback={<Spin size="large" className="content_spin" />}>
-            <button onClick={handle}>click</button>
             <Outlet />
           </Suspense>
         </Content>
