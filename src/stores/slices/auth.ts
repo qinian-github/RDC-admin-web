@@ -15,6 +15,7 @@ export const loginInfoSlice = createSlice({
         setUserInfo: (state, action) => {
             state = action.payload
             window.localStorage.setItem(globalConfig.SESSION_LOGIN_INFO, JSON.stringify(state))
+            return action.payload
         },
         removeUserInfo: (state,action) => {
             state = action.payload

@@ -30,11 +30,11 @@ const RightContent: React.FC = () => {
   const items: MenuProps["items"] = [
     {
       key: "1",
-      label: <span onClick={logoutHandle}>退出登录</span>,
+      label: <span onClick={centerHandle}>个人中心</span>,
     },
     {
       key: "2",
-      label: <span onClick={centerHandle}>个人中心</span>,
+      label: <span onClick={logoutHandle}>退出登录</span>,
     },
   ];
 

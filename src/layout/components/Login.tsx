@@ -101,7 +101,10 @@ const Login = () => {
         <Tabs
           centered
           activeKey={loginType}
-          onChange={(activeKey) => setLoginType(activeKey as LoginType)}
+          onChange={(activeKey) => {
+            setLoginType(activeKey as LoginType)
+            refreshCaptcha()
+          }}
           items={[
             {
               key: 'login',
