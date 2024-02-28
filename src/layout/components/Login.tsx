@@ -41,8 +41,9 @@ const Login = () => {
   useEffect(() => {
     if (userInfo.token) {
       navigate("/", { replace: true });
+    } else {
+      refreshCaptcha()
     }
-    refreshCaptcha()
   }, [navigate, userInfo.token])
 
   const onFinish = (values: any) => {

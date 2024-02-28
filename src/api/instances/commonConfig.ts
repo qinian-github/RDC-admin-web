@@ -2,9 +2,9 @@ import type { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } fr
 import { RequestInterceptor, ResponseInterceptor } from './types';
 import { message } from 'antd';
 
-export let API_DOMAIN = 'https://rdc2022.club/manage'
+export let API_DOMAIN = 'http://47.115.221.236/manage'
 if (process.env.NODE_ENV === 'production') {
-  API_DOMAIN = 'https://rdc2022.club/manage'
+  API_DOMAIN = 'http://47.115.221.236/manage'
 }
 
 // 通用请求配置
@@ -12,7 +12,8 @@ const commonRequestConfig: AxiosRequestConfig = {
   baseURL: API_DOMAIN,
   timeout: 3000,
   headers: {
-    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJhZG1pblJvbGUiOjEsImV4cCI6MTY5Nzk2MTQ1MywidXNlcm5hbWUiOiJhZG1pbiJ9.I7euD9twlUbCMZneR_ADK_pQSa2H9UI3m10BwMYGGDo',
+    // 'Authorization': 'Bearer 3OILJYI/gRyKQWoPifNyv4HpQttfvGnyfAN9VWFN1eG+fOn217hBZkYdEV3dmwtijudwK3UNdSWDG+xEOIb5W66WJcwPDIX9NTGEv4vcY+jLL3wRLOpPKmLoISB1zxabZcN3R1e/8MWsqlp8jsNUR5yvXm58wpBbFrvJexvuxsIavwrt46gbPdKT7bN3IHIlx5/eebTyBDlnMMS23MOYddZI2OBVilwk6jaW302YHXI=',
+    
   },
   // 表示支持跨域请求携带Cookie，默认是false，表示不携带Cookie
   // 同时需要后台配合，返回需要有以下字段，

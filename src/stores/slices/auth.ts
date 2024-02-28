@@ -21,6 +21,7 @@ export const loginInfoSlice = createSlice({
             state = action.payload
             console.log(state);
             window.localStorage.removeItem(globalConfig.SESSION_LOGIN_INFO)
+            return action.payload
         },
     },
 })
