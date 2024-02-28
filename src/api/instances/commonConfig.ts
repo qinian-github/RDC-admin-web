@@ -1,12 +1,16 @@
-import type { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import type {
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from 'axios';
 import { RequestInterceptor, ResponseInterceptor } from './types';
 import { message } from 'antd';
 
 // 开发环境地址
-let API_DOMAIN = 'http://192.168.124.15:8081/'
+let API_DOMAIN = 'http://47.115.221.236/manage';
 if (process.env.NODE_ENV === 'production') {
   // 正式环境地址
-  API_DOMAIN = 'http://jsonplaceholder.typicode.com'
+  API_DOMAIN = 'http://47.115.221.236/manage';
 }
 
 // 通用请求配置
@@ -15,7 +19,8 @@ const commonRequestConfig: AxiosRequestConfig = {
   // 指定请求超时的毫秒数
   timeout: 3000,
   headers: {
-    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJhZG1pblJvbGUiOjEsImV4cCI6MTY5Nzk2MTQ1MywidXNlcm5hbWUiOiJhZG1pbiJ9.I7euD9twlUbCMZneR_ADK_pQSa2H9UI3m10BwMYGGDo',
+    // Authorization:
+    //     'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJhZG1pblJvbGUiOjEsImV4cCI6MTY5Nzk2MTQ1MywidXNlcm5hbWUiOiJhZG1pbiJ9.I7euD9twlUbCMZneR_ADK_pQSa2H9UI3m10BwMYGGDo',
   },
   // 表示支持跨域请求携带Cookie，默认是false，表示不携带Cookie
   // 同时需要后台配合，返回需要有以下字段，
@@ -40,7 +45,7 @@ const commonRequestInterceptors: RequestInterceptor[] = [
     },
     onRejected: (error) => {
       const errorMsg = error?.message || 'Request Error';
-      message.error(errorMsg)
+      message.error(errorMsg);
       return Promise.reject(error);
     },
   },
@@ -93,7 +98,7 @@ const commonResponseInterceptors: ResponseInterceptor[] = [
         default:
           msg = '网络连接故障';
       }
-      message.error(msg)
+      message.error(msg);
       return Promise.reject(error);
     },
   },
