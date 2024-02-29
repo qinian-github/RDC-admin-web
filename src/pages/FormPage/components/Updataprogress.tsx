@@ -48,17 +48,17 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
     try {
       // 发送请求到服务器
       console.log(selectedKeys);
-      let res = await ExamineApi.UpdateProgress({
-        userIds: selectedKeys,
-        progress: values.status,
-      });
+      // let res = await ExamineApi.UpdateProgress({
+      //   userIds: selectedKeys,
+      //   progress: values.status,
+      // });
       fetch('http://47.115.221.236/manage/examine/updateProgress', {
         userIds: selectedKeys,
         progress: values.status,
       })
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log('error', error));
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.log('error', error));
       //   progress: values.status,;
       // let res = await ExamineApi.UpdateProgress({
       //   userIds: selectedKeys,
