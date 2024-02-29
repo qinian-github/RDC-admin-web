@@ -1,171 +1,133 @@
-import { ProColumns } from "@ant-design/pro-components";
-import { TournamentFormItem} from "@/api/modules/Tournament/types";
-export const columns: ProColumns<TournamentFormItem>[] = [
-    {
-        title: "ID",
-        dataIndex: "id",
-        hideInTable: true,
-        hideInSearch: true,
+import { ProColumns } from '@ant-design/pro-components';
+import {
+  getCollegeName,
+  getRoleName,
+  getStatusName,
+} from '../../../utils/getConst';
+// import { TournamentFormItem } from '@/api/modules/Examine/types';
+import { Space } from 'antd';
+export const columns: ProColumns[] = [
+  {
+    title: 'ID',
+    dataIndex: 'userId',
+    hideInTable: true,
+    hideInSearch: true,
+  },
+
+  {
+    title: '姓名',
+    dataIndex: 'realName',
+    ellipsis: true,
+    formItemProps: {
+      rules: [
+        {
+          required: true,
+          message: '此项为必填项',
+        },
+      ],
+    },
+  },
+  {
+    title: '性别',
+    dataIndex: 'sex',
+    hideInSearch: true,
+    formItemProps: {
+      rules: [
+        {
+          required: true,
+          message: '此项为必填项',
+        },
+      ],
     },
 
-    {
-        title: "比赛名称",
-        dataIndex: "eventName",
-        ellipsis: true,
-        formItemProps: {
-            rules: [
-                {
-                    required: true,
-                    message: "此项为必填项",
-                },
-            ],
+    onFilter: true,
+    render: (_, record) => <Space>{record.sex == '0' ? '男' : '女'}</Space>,
+  },
+  {
+    title: '学号',
+    dataIndex: 'schoolNumber',
+    hideInSearch: true,
+    search: false,
+    formItemProps: {
+      rules: [
+        {
+          required: true,
+          message: '此项为必填项',
         },
-    }, {
-        title: "总参赛人数",
-        dataIndex: "athleteNumber",
-        ellipsis: true,
-        search: false,
-        formItemProps: {
-            rules: [
-                {
-                    required: true,
-                    message: "此项为必填项",
-                },
-            ],
-        },
+      ],
     },
-    {
-        title: "每局比赛时长",
-        dataIndex: "eventTime",
-        hideInSearch: true,
-        search: false,
-        formItemProps: {
-            rules: [
-                {
-                    required: true,
-                    message: "此项为必填项",
-                },
-            ],
+  },
+  {
+    title: '手机号',
+    dataIndex: 'phoneNumber',
+    sortDirections: ['descend', 'ascend'],
+    search: false,
+    formItemProps: {
+      rules: [
+        {
+          required: true,
+          message: '此项为必填项',
         },
+      ],
     },
-    {
-        title: "预赛组数",
-        dataIndex: "preliminaryNumber",
-        sortDirections: ['descend', "ascend"],
-        search: false,
-        formItemProps: {
-            rules: [
-                {
-                    required: true,
-                    message: "此项为必填项",
-                },
-            ],
+  },
+  {
+    title: '学院',
+    hideInSearch: true,
+    dataIndex: 'college',
+    formItemProps: {
+      rules: [
+        {
+          required: true,
+          message: '此项为必填项',
         },
+      ],
     },
-    {
-        title: "预赛通过人数",
-        hideInSearch: true,
-        dataIndex: "preliminaryAccess",
-        formItemProps: {
-            rules: [
-                {
-                    required: true,
-                    message: "此项为必填项",
-                },
-            ],
+    render: (_, record) => <Space>{getCollegeName(record.college)}</Space>,
+  },
+  {
+    title: '考核组别方向',
+    hideInSearch: true,
+    dataIndex: 'groupType',
+    formItemProps: {
+      rules: [
+        {
+          required: true,
+          message: '此项为必填项',
         },
+      ],
     },
-    {
-        title: "次赛组数",
-        hideInSearch: true,
-        dataIndex: "quarterFinalsNumber",
-        formItemProps: {
-            rules: [
-                {
-                    required: true,
-                    message: "此项为必填项",
-                },
-            ],
+    render: (_, record) => <Space>{getRoleName(record.groupType)}</Space>,
+  },
+  {
+    title: '考核进度',
+    dataIndex: 'progress',
+    key: 'option',
+    hideInSearch: true,
+    formItemProps: {
+      rules: [
+        {
+          required: true,
+          message: '此项为必填项',
         },
+      ],
     },
-    {
-        title: '次赛通过人数',
-        dataIndex: 'quarterFinalsAccess',
-        key: 'option',
-        hideInSearch: true,
-        formItemProps: {
-            rules: [
-                {
-                    required: true,
-                    message: "此项为必填项",
-                },
-            ],
-        },
-  
-    }, {
-        title: "复赛组数",
-        hideInSearch: true,
-        dataIndex: "semiFinalNumber",
-        formItemProps: {
-            rules: [
-                {
-                    required: true,
-                    message: "此项为必填项",
-                },
-            ],
-        },
-    },{
-        title: "复赛通过人数",
-        hideInSearch: true,
-        dataIndex: "semiFinalAccess",
-        formItemProps: {
-            rules: [
-                {
-                    required: true,
-                    message: "此项为必填项",
-                },
-            ],
-        },
-    },
-     {
-        title: "决赛组数",
-        hideInSearch: true,
-        dataIndex: "finalNumber",
-        formItemProps: {
-            rules: [
-                {
-                    required: true,
-                    message: "此项为必填项",
-                },
-            ],
-        },
-    },
-    {
-        title: "决赛通过人数",
-        hideInSearch: true,
-        dataIndex: "finalAccess",
-        formItemProps: {
-            rules: [
-                {
-                    required: true,
-                    message: "此项为必填项",
-                },
-            ],
-        },
-    },   {
-        title: '操作',
-        dataIndex: 'quarterFinalsAccess',
-        key: 'option',
-        valueType: 'option',
-        render: (_text, record, _, action) => [
-            <a
-                key="editable"
-                onClick={() => {
-                    action?.startEditable?.(record.id);
-                }}
-            >
-                编辑
-            </a>
-        ]
-    }
+    render: (_, record) => <Space>{getStatusName(record.progress)}</Space>,
+  },
+  {
+    title: '操作',
+    dataIndex: 'progress',
+    key: 'option',
+    valueType: 'option',
+    render: (_text, record, _, action) => [
+      <a
+        key="editable"
+        onClick={() => {
+          action?.startEditable?.(record.id);
+        }}
+      >
+        详情
+      </a>,
+    ],
+  },
 ];

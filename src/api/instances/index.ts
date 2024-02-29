@@ -10,17 +10,28 @@ const adminInstance = createInstance(
     baseURL: API_DOMAIN + '/admin',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      // 'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJhZG1pblJvbGUiOjEsImV4cCI6MTY5Nzk2MTQ1MywidXNlcm5hbWUiOiJhZG1pbiJ9.I7euD9twlUbCMZneR_ADK_pQSa2H9UI3m10BwMYGGDo',
     },
   },
   [],
   [],
 );
-const TournamentInstance = createInstance(
+const ExamineInstance = createInstance(
   {
-    baseURL: API_DOMAIN + '/event',
+    baseURL: API_DOMAIN + '/examine',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
   },
   [],
   [],
 );
-export { baseInstance, adminInstance,TournamentInstance };
+
+const messageInstance = createInstance(
+  {
+    baseURL: API_DOMAIN + '/sms',
+  },
+  [],
+  [],
+);
+
+export { baseInstance, adminInstance, messageInstance, ExamineInstance };

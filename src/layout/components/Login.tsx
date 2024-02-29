@@ -201,11 +201,11 @@ const Login = () => {
             <ProFormSelect
               name="roleSelect"
               valueEnum={{
-                2: ' 前端',
-                3: ' 后端',
-                4: ' 安卓',
-                5: ' UI',
-                6: ' AI',
+                1: ' 前端',
+                2: ' 后端',
+                3: ' UI',
+                4: ' AI',
+                5: ' 安卓',
               }}
               fieldProps={{
                 size: "large",

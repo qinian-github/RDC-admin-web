@@ -33,6 +33,7 @@ export interface listAllTournament {
     "academy": string,
     "majorClass": string,
     "phoneNumber": string
+    
   }
 
   
