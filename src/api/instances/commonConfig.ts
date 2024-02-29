@@ -12,8 +12,7 @@ const commonRequestConfig: AxiosRequestConfig = {
   baseURL: API_DOMAIN,
   timeout: 3000,
   headers: {
-    // 'Authorization': 'Bearer 3OILJYI/gRyKQWoPifNyv4HpQttfvGnyfAN9VWFN1eG+fOn217hBZkYdEV3dmwtijudwK3UNdSWDG+xEOIb5W66WJcwPDIX9NTGEv4vcY+jLL3wRLOpPKmLoISB1zxabZcN3R1e/8MWsqlp8jsNUR5yvXm58wpBbFrvJexvuxsIavwrt46gbPdKT7bN3IHIlx5/eebTyBDlnMMS23MOYddZI2OBVilwk6jaW302YHXI=',
-    
+    // 'Authorization': localStorage.getItem('userLoginInfo') ? JSON.parse(localStorage.getItem('userLoginInfo') || '').token : '',
   },
   // 表示支持跨域请求携带Cookie，默认是false，表示不携带Cookie
   // 同时需要后台配合，返回需要有以下字段，
@@ -27,13 +26,11 @@ const commonRequestConfig: AxiosRequestConfig = {
 const commonRequestInterceptors: RequestInterceptor[] = [
   {
     onFulfilled: (config: InternalAxiosRequestConfig) => {
-      /**
-       * 在这里一般会携带前台的参数发送给后台，比如下面这段代码：
-       * const token = getToken()
-       * if (token) {
-       *  config.headers.token = token
-       * }
-       */
+      // 在这里一般会携带前台的参数发送给后台，比如下面这段代码：
+      const token = localStorage.getItem('userLoginInfo') ? 'Bearer '+JSON.parse(localStorage.getItem('userLoginInfo') || '').token : ''
+      if (token) {
+        config.headers.Authorization = token
+      }
       return config;
     },
     onRejected: (error) => {

@@ -7,7 +7,7 @@ import { globalConfig } from "./globalConfig";
 import {
   HomeOutlined,
   EditOutlined,
-  TableOutlined,
+  MessageOutlined,
   BarsOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -17,7 +17,7 @@ import Result404 from "@/components/NotFound";
 const LoginPage = lazy(() => import("../layout/components/Login"));
 const Home = lazy(() => import("../pages/Home"));
 const FormPage = lazy(() => import("../pages/FormPage"));
-const TablePage = lazy(() => import("../pages/TablePage"));
+const MessagePage = lazy(() => import("../pages/MessagePage"));
 const AccountCenter = lazy(() => import("../pages/AccountPage/AccountCenter"));
 const AccountSettings = lazy(() => import("../pages/AccountPage/AccountSettings"));
 const DetailPage = lazy(() => import("../pages/DetailPage"));
@@ -63,9 +63,9 @@ const routes = [
       },
       {
         path: "/table",
-        title: "列表页",
-        icon: <TableOutlined />,
-        element: LazyLoad(TablePage),
+        title: "短信",
+        icon: <MessageOutlined />,
+        element: LazyLoad(MessagePage),
       },
       {
         path: "/detail",

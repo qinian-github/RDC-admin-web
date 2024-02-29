@@ -10,11 +10,19 @@ const adminInstance = createInstance(
     baseURL: API_DOMAIN + '/admin',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJhZG1pblJvbGUiOjEsImV4cCI6MTY5Nzk2MTQ1MywidXNlcm5hbWUiOiJhZG1pbiJ9.I7euD9twlUbCMZneR_ADK_pQSa2H9UI3m10BwMYGGDo',
     }
   },
   [],
   []
 );
 
-export { baseInstance, adminInstance };
+const messageInstance = createInstance(
+  {
+    baseURL: API_DOMAIN + '/sms',
+  },
+  [],
+  []
+);
+
+
+export { baseInstance, adminInstance, messageInstance };

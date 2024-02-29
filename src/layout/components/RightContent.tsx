@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from "react";
-import { Avatar, Dropdown, MenuProps, Button, Input, Badge, Space, message } from "antd";
-import { SkinOutlined, BellOutlined } from "@ant-design/icons";
+import { Avatar, Dropdown, MenuProps, Button, Input, Space, message } from "antd";
+import { SkinOutlined } from "@ant-design/icons";
 import { debounce } from "../../utils/func";
 import styles from "../index.module.scss";
 import { useNavigate } from "react-router-dom";
@@ -45,9 +45,9 @@ const RightContent: React.FC = () => {
   return (
     <Space size={24}>
       <span style={{ display: "flex" }}>
-        <Badge count={12}>
+        {/* <Badge count={12}>
           <BellOutlined style={{ fontSize: 24, cursor: 'pointer' }} />
-        </Badge>
+        </Badge> */}
       </span>
       {globalTheme.dark ? (
         <Button
