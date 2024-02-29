@@ -11,7 +11,6 @@ import HeaderComp from "./components/Header";
 import { routes } from "../config/router";
 import "antd/dist/reset.css";
 import { createFromIconfontCN } from '@ant-design/icons';
-import axios from "axios";
 
 const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/c/font_4280892_pybmn8s64a.js',
@@ -33,13 +32,6 @@ const BasicLayout: React.FC = () => {
   } = theme.useToken();
 
   useEffect(() => {
-    axios.get('https://rdc2022.club/manage/export?group=前端', {
-      headers: {
-        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJhZG1pblJvbGUiOjEsImV4cCI6MTY5Nzk2MTQ1MywidXNlcm5hbWUiOiJhZG1pbiJ9.I7euD9twlUbCMZneR_ADK_pQSa2H9UI3m10BwMYGGDo',
-      }
-    }).then(res => {
-      console.log(res);
-    })
   }, [])
 
   const getItems: any = (children: RouteType[]) => {

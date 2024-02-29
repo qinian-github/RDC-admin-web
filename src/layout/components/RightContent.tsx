@@ -21,7 +21,7 @@ const RightContent: React.FC = () => {
   const logoutHandle = () => {
     message.success("成功退出登录")
     dispatch(removeUserInfo({}))
-    navigateTo("/login", { replace: true });
+    navigateTo("/login", { replace: false });
   };
   const centerHandle = () => {
     navigateTo('/account/center')
