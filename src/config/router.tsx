@@ -1,19 +1,21 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from "react";
-import LoginPage from "../layout/components/Login";
+// import LoginPage from "../layout/components/Login";
 import App from "../App";
-import { createBrowserRouter, Navigate, redirect } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
 import { globalConfig } from "./globalConfig";
 import {
-  DashboardOutlined,
+  HomeOutlined,
   EditOutlined,
   TableOutlined,
   BarsOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import Permission from "@/components/Permission";
+import Result404 from "@/components/NotFound";
 
-const Dashboard = lazy(() => import("../pages/Dashboard"));
+const LoginPage = lazy(() => import("../layout/components/Login"));
+const Home = lazy(() => import("../pages/Home"));
 const FormPage = lazy(() => import("../pages/FormPage"));
 const TablePage = lazy(() => import("../pages/TablePage"));
 const AccountCenter = lazy(() => import("../pages/AccountPage/AccountCenter"));
@@ -49,9 +51,9 @@ const routes = [
       {
         index: true,
         path: '/',
-        title: "Dashboard",
-        icon: <DashboardOutlined />,
-        element: LazyLoad(Dashboard),
+        title: "首页",
+        icon: <HomeOutlined />,
+        element: LazyLoad(Home),
       },
       {
         path: "/form",
@@ -90,13 +92,19 @@ const routes = [
       },
       {
         path: "*",
-        element: <Navigate to="/" replace={true} />,
+        element: <Result404 />
+        // element: <Navigate to="/" replace={true} />,
       },
     ],
   },
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "*",
+    element: <Result404 />
+    // element: <Navigate to="/" replace={true} />,
   },
 ];
 

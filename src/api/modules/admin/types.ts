@@ -6,8 +6,17 @@ export interface LoginParams {
 }
 
 export interface LoginRes {
-  code: string,
-  data: string,
+  code: number,
+  data: {
+    info:{
+      adminId:number,
+      adminRole:number,
+      // 过期时间,截止时间
+      exp:number,
+      username:string
+    },
+    token:string
+  },
   msg: string
 }
 

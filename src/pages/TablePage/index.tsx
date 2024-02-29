@@ -117,7 +117,7 @@ const columns: ProColumns<GithubIssueItem>[] = [
     title: "操作",
     valueType: "option",
     key: "option",
-    render: (text, record, _, action) => [
+    render: (_text, record, _, action) => [
       <a
         key="editable"
         onClick={() => {
@@ -146,18 +146,18 @@ const TablePage: React.FC = () => {
       columns={columns}
       actionRef={actionRef}
       cardBordered
-      // request={async () => {
-      //   await waitTime(500);
-      //   const res = await getTable();
-      //   return {
-      //     data: res.data,
-      //     // success 请返回 true，
-      //     // 不然 table 会停止解析数据，即使有数据
-      //     success: res.code === 200,
-      //     // 不传会使用 data 的长度，如果是分页一定要传
-      //     // total: number,
-      //   };
-      // }}
+      request={async () => {
+        await waitTime(500);
+        const res = await getTable();
+        return {
+          data: res.data,
+          // success 请返回 true，
+          // 不然 table 会停止解析数据，即使有数据
+          success: res.code === 200,
+          // 不传会使用 data 的长度，如果是分页一定要传
+          // total: number,
+        };
+      }}
       editable={{
         type: "multiple",
       }}

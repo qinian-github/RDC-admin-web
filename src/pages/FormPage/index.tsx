@@ -1,9 +1,9 @@
-import React from "react";
-
-const FormPage: React.FC = () => {
+import { Card } from "antd";
+import TournamentTable from './components/TournamentTable'
+export default function ScoreManage() {
   return (
-    <></>
-  );
-};
-
-export default FormPage;
+    <Card bordered={false}>
+      <TournamentTable></TournamentTable>
+    </Card>
+  )
+}

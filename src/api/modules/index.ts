@@ -1,4 +1,4 @@
 import * as adminApi from './admin';
 import * as baseApi from './base';
-
-export { adminApi, baseApi  };
+import * as TournamentApi from './Tournament';
+export { adminApi, baseApi, TournamentApi };
