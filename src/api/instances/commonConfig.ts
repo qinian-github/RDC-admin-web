@@ -31,7 +31,7 @@ const commonRequestInterceptors: RequestInterceptor[] = [
   {
     onFulfilled: (config: InternalAxiosRequestConfig) => {
       // 在这里一般会携带前台的参数发送给后台，比如下面这段代码：
-      const token = localStorage.getItem('userLoginInfo') ? 'Bearer '+JSON.parse(localStorage.getItem('userLoginInfo') || '').token : ''
+      const token = localStorage.getItem('userLoginInfo') ? 'Bearer ' + JSON.parse(localStorage.getItem('userLoginInfo') || '').token : ''
       if (token) {
         config.headers.Authorization = token
       }
@@ -51,22 +51,17 @@ const commonResponseInterceptors: ResponseInterceptor[] = [
     onFulfilled: (response: AxiosResponse) => {
       // 这里我们将后台返回的数据解构出来返回，方便后续获取
       const { data } = response;
-      return data;
       // 这里根据其它业务可以做其它特殊的拦截，比如根据后台返回的data有固定的格式，根据后台返回的code可以做一些统一处理，比如像下面这样
-      // const { code, message, data } = response.data;
-
+      const { code, msg } = data;
       // // 根据自定义错误码判断请求是否成功
-      // if (code === 0) {
-      //   // 将组件用的数据返回
-      //   return data;
-      // } else {
-      //   // 处理业务错误。
-      //   ElMessage({
-      //     message: message,
-      //     type: 'error',
-      //   });
-      //   return Promise.reject(new Error(message));
-      // }
+      if (code == 200) {
+        // 将组件用的数据返回
+        message.success(msg)
+      } else {
+        // 处理业务错误。
+        message.error(msg)
+      }
+      return data;
     },
     onRejected: (error) => {
       const { response } = error;

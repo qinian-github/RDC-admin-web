@@ -11,7 +11,7 @@ import {
   ProFormText,
 } from "@ant-design/pro-components";
 import { useSelector, useDispatch } from 'react-redux'
-import { message, Tabs } from "antd";
+import { Tabs } from "antd";
 import { setUserInfo } from "@/stores/slices/auth";
 import { getCaptcha } from "@/api/modules/base";
 import { login, register } from "@/api/modules/admin";
@@ -33,7 +33,6 @@ const Login = () => {
 
   const refreshCaptcha = async () => {
     const { data } = await getCaptcha()
-    message.success("成功刷新验证码")
     setCaptcha(data.img)
     setUuid(data.uuid)
   }
@@ -53,13 +52,9 @@ const Login = () => {
       return delay(1000).then(() => {
         login(params).then((res: LoginRes) => {
           if (res.code == 200) {
-            message.success("登录成功🎉🎉🎉");
             dispatch(setUserInfo(res.data))
             navigate("/", { replace: true });
-          } else {
-            const errorMsg = res.msg.substring(5);
-            message.error(errorMsg)
-          }
+          } 
         })
       })
     } else {
@@ -70,12 +65,8 @@ const Login = () => {
       return delay(1000).then(() => {
         register(params).then((res: RegisterRes) => {
           if (res.code == '200') {
-            message.success("注册成功🎉🎉🎉");
             setLoginType('login')
-          } else {
-            const errorMsg = res.msg.substring(5);
-            message.error(errorMsg)
-          }
+          } 
         })
       })
     }
