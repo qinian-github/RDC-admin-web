@@ -2,7 +2,7 @@
 import { lazy } from 'react';
 // import LoginPage from "../layout/components/Login";
 import App from '../App';
-import { createBrowserRouter, redirect } from 'react-router-dom';
+import { createHashRouter, redirect } from 'react-router-dom';
 import { globalConfig } from './globalConfig';
 import {
   HomeOutlined,
@@ -76,7 +76,7 @@ const routes = [
       },
       {
         path: '/detail',
-        title: '详情页',
+        title: '预约时间',
         icon: <BarsOutlined />,
         element: LazyLoad(DetailPage),
       },
@@ -117,6 +117,6 @@ const routes = [
 
 export { routes };
 
-const globalBorwserRouter = createBrowserRouter(routes);
+const globalBorwserRouter = createHashRouter(routes);
 
 export default globalBorwserRouter;

@@ -6,9 +6,9 @@ import type {
 import { RequestInterceptor, ResponseInterceptor } from './types';
 import { message } from 'antd';
 
-export let API_DOMAIN = 'http://47.115.221.236/manage'
+export let API_DOMAIN = 'http://47.115.221.236/manage';
 if (process.env.NODE_ENV === 'production') {
-  API_DOMAIN = 'http://47.115.221.236/manage'
+  API_DOMAIN = 'http://47.115.221.236/manage';
 }
 
 // 通用请求配置
@@ -31,9 +31,12 @@ const commonRequestInterceptors: RequestInterceptor[] = [
   {
     onFulfilled: (config: InternalAxiosRequestConfig) => {
       // 在这里一般会携带前台的参数发送给后台，比如下面这段代码：
-      const token = localStorage.getItem('userLoginInfo') ? 'Bearer ' + JSON.parse(localStorage.getItem('userLoginInfo') || '').token : ''
+      const token = localStorage.getItem('userLoginInfo')
+        ? 'Bearer ' +
+          JSON.parse(localStorage.getItem('userLoginInfo') || '').token
+        : '';
       if (token) {
-        config.headers.Authorization = token
+        config.headers.Authorization = token;
       }
       return config;
     },
@@ -56,10 +59,10 @@ const commonResponseInterceptors: ResponseInterceptor[] = [
       // // 根据自定义错误码判断请求是否成功
       if (code == 200) {
         // 将组件用的数据返回
-        message.success(msg)
+        message.success(msg);
       } else {
         // 处理业务错误。
-        message.error(msg)
+        message.error(msg);
       }
       return data;
     },

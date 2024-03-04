@@ -25,7 +25,16 @@ const ExamineInstance = createInstance(
   [],
   [],
 );
-
+const BookingInstance = createInstance(
+  {
+    baseURL: API_DOMAIN + '/reservation',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  },
+  [],
+  [],
+);
 const messageInstance = createInstance(
   {
     baseURL: API_DOMAIN + '/sms',
@@ -34,4 +43,10 @@ const messageInstance = createInstance(
   [],
 );
 
-export { baseInstance, adminInstance, messageInstance, ExamineInstance };
+export {
+  baseInstance,
+  adminInstance,
+  messageInstance,
+  ExamineInstance,
+  BookingInstance,
+};

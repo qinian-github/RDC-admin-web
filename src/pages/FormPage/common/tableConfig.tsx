@@ -3,9 +3,17 @@ import {
   getCollegeName,
   getRoleName,
   getStatusName,
+  getProgressName,
 } from '../../../utils/getConst';
 // import { TournamentFormItem } from '@/api/modules/Examine/types';
 import { Space } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import DetailLink from '../components/DetailLink';
+import {
+  setModalVisible,
+  setCurrentRecord,
+} from '../../../stores/slices/modal';
+console.log(setModalVisible);
 export const columns: ProColumns[] = [
   {
     title: 'ID',
@@ -46,8 +54,8 @@ export const columns: ProColumns[] = [
   {
     title: '学号',
     dataIndex: 'schoolNumber',
-    hideInSearch: true,
-    search: false,
+    // hideInSearch: true,
+    // search: false,
     formItemProps: {
       rules: [
         {
@@ -102,8 +110,8 @@ export const columns: ProColumns[] = [
   {
     title: '考核进度',
     dataIndex: 'progress',
-    key: 'option',
-    hideInSearch: true,
+    key: 'progress',
+    // hideInSearch: true,
     formItemProps: {
       rules: [
         {
@@ -111,6 +119,19 @@ export const columns: ProColumns[] = [
           message: '此项为必填项',
         },
       ],
+    },
+    valueEnum: {
+      0: { text: '未报名' },
+      1: { text: '面试未预约' },
+      2: { text: '面试已预约' },
+      3: { text: '面试未通过' },
+      4: { text: '面试通过' },
+      5: { text: '一轮已预约' },
+      6: { text: '一轮未通过' },
+      7: { text: '一轮通过' },
+      8: { text: '二轮已预约' },
+      9: { text: '二轮未通过' },
+      10: { text: '通过考核' },
     },
     render: (_, record) => <Space>{getStatusName(record.progress)}</Space>,
   },
@@ -120,14 +141,7 @@ export const columns: ProColumns[] = [
     key: 'option',
     valueType: 'option',
     render: (_text, record, _, action) => [
-      <a
-        key="editable"
-        onClick={() => {
-          action?.startEditable?.(record.id);
-        }}
-      >
-        详情
-      </a>,
+      <DetailLink key="editable" record={record} action={action} />,
     ],
   },
 ];

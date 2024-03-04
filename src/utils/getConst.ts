@@ -15,13 +15,26 @@ const colleges = [
 ];
 const statuses = [
   '未报名',
-  '面试未预约/查面试预约情况',
+  '面试未预约',
   '面试已预约',
   '面试未通过',
-  '一轮未预约/查一轮预约情况',
+  '面试通过',
   '一轮已预约',
   '一轮未通过',
-  '二轮未预约/查二轮预约情况',
+  '一轮通过',
+  '二轮已预约',
+  '二轮未通过',
+  '通过考核',
+];
+const progress = [
+  '面试',
+  '面试未预约',
+  '面试已预约',
+  '一轮',
+  '面试通过',
+  '一轮已预约',
+  '二轮',
+  '一轮通过',
   '二轮已预约',
   '二轮未通过',
   '通过考核',
@@ -46,6 +59,14 @@ export function getRoleName(index: any) {
 export function getStatusName(index: any) {
   if (index >= 0 && index < statuses.length) {
     return statuses[index];
+  } else {
+    return 'Invalid index';
+  }
+}
+export function getProgressName(index: any) {
+  if (index >= 1 && index <= colleges.length) {
+    return progress[index - 1];
+    console.log(index - 1);
   } else {
     return 'Invalid index';
   }

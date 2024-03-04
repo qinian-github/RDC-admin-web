@@ -4,11 +4,16 @@ import type { ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Button, message } from 'antd';
 import Updataprogress from './Updataprogress';
-import { ExamineApi } from '@/api';
+import { BookingApi } from '@/api';
 import { columns } from '../common/tableConfig';
 import { TournamentItem } from '@/api/modules/Examine/types';
 import { MyContextProvider } from './MyContextProvider';
 import Mymodal from './Mymodal';
+import DetailLink from '../components/DetailLink';
+import {
+  setModalVisible,
+  setCurrentRecord,
+} from '../../../stores/slices/modal';
 
 const waitTimePromise = async (time: number = 100) => {
   return new Promise((resolve) => {
@@ -60,7 +65,7 @@ const TablePage: React.FC = () => {
   return (
     <MyContextProvider>
       <ProTable<any>
-        rowKey="userId"
+        rowKey="reservationId"
         columns={columns as any}
         actionRef={actionRef}
         cardBordered
@@ -78,7 +83,15 @@ const TablePage: React.FC = () => {
           await waitTime();
           let res: any;
           console.log(params);
-          if (params) {
+          if (
+            params &&
+            Object.keys(params).length !== 0 &&
+            !(
+              Object.keys(params).length === 2 &&
+              'current' in params &&
+              'pageSize' in params
+            )
+          ) {
             const newParams = {
               ...params,
               pageIndex: params.current,
@@ -89,20 +102,19 @@ const TablePage: React.FC = () => {
             });
             // res = await ExamineApi.GetUserInfo(params);
             // res = [res];
-            res = await ExamineApi.GetUserInfo(newParams).then((res: any) => {
-              totalNum = res.data.total;
-              res = res.data.records;
-              console.log(res);
-              return res;
-            });
+            res = await BookingApi.getAllReservation(newParams).then(
+              (res: any) => {
+                res = res.data;
+                console.log(res);
+                return res;
+              },
+            );
             console.log(res);
           } else {
-            res = await ExamineApi.GetUserInfo({
-              pageSize: params.pageSize,
-              pageIndex: params.current,
+            res = await BookingApi.getAllReservation({
+              progress: 1,
             }).then((res: any) => {
-              totalNum = res.data.total;
-              res = res.data.records;
+              res = res.data;
 
               console.log(res);
               return res;
@@ -117,7 +129,6 @@ const TablePage: React.FC = () => {
               // 不然 table 会停止解析数据，即使有数据
               success: res ? true : false,
               // 不传会使用 data 的长度，如果是分页一定要传
-              total: totalNum,
             });
           });
         }}
@@ -129,7 +140,7 @@ const TablePage: React.FC = () => {
             if (JSON.stringify(data) === JSON.stringify(origin)) return;
             else {
               delete data.index;
-              await ExamineApi.updateTournament(data as TournamentItem);
+              await BookingApi.updateTournament(data as TournamentItem);
             }
             // actionRef.current?.cancelEditable(rowKey)
             // return Promise.reject()
@@ -146,7 +157,7 @@ const TablePage: React.FC = () => {
         // pagination={
 
         // }
-        headerTitle="考核信息"
+        headerTitle="预约信息"
         toolBarRender={() => [
           <Button
             onClick={() => {
@@ -158,8 +169,9 @@ const TablePage: React.FC = () => {
               setOpen(true);
             }}
           >
-            修改进度
+            修改录取人数
           </Button>,
+          <DetailLink key="editable" />,
           <Updataprogress
             open={open}
             onCreate={onCreate}
