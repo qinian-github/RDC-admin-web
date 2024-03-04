@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import {
   LockOutlined,
   UserOutlined,
-  SafetyOutlined
+  SafetyOutlined,
+  TeamOutlined
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import {
@@ -54,19 +55,19 @@ const Login = () => {
           if (res.code == 200) {
             dispatch(setUserInfo(res.data))
             navigate("/", { replace: true });
-          } 
+          }
         })
       })
     } else {
       // eslint-disable-next-line prefer-const
-      let { registerUsername: username, registerPassword: password, registerCaptcha: code, roleSelect: roleId } = values
+      let { registerUsername: username, registerPassword: password, registerCaptcha: code, roleSelect: roleId, inviteCode } = values
       roleId = Number(roleId)
-      const params: RegisterParams = { username, password, code, roleId, uuid, }
+      const params: RegisterParams = { username, password, code, roleId, uuid, inviteCode }
       return delay(1000).then(() => {
         register(params).then((res: RegisterRes) => {
           if (res.code == '200') {
             setLoginType('login')
-          } 
+          }
         })
       })
     }
@@ -139,6 +140,7 @@ const Login = () => {
                 },
               ]}
             />
+
             <div style={{ display: "flex" }}>
               <ProFormText
                 name="loginCaptcha"
@@ -222,6 +224,20 @@ const Login = () => {
               />
               <img onClick={refreshCaptcha} src={`data:image/jpg;base64,${captcha}`} style={{ flexGrow: 1, height: 40, padding: 2, border: 0 }} alt="code" />
             </div>
+            <ProFormText.Password
+              name="inviteCode"
+              fieldProps={{
+                size: "large",
+                prefix: <TeamOutlined className={"prefixIcon"} />,
+              }}
+              placeholder={"邀请码:"}
+              rules={[
+                {
+                  required: true,
+                  message: "请输入邀请码！",
+                },
+              ]}
+            />
           </>
         )}
       </LoginFormPage>
