@@ -10,19 +10,43 @@ const adminInstance = createInstance(
     baseURL: API_DOMAIN + '/admin',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-    }
+    },
   },
   [],
-  []
+  [],
 );
-
+const ExamineInstance = createInstance(
+  {
+    baseURL: API_DOMAIN + '/examine',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  },
+  [],
+  [],
+);
+const BookingInstance = createInstance(
+  {
+    baseURL: API_DOMAIN + '/reservation',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  },
+  [],
+  [],
+);
 const messageInstance = createInstance(
   {
     baseURL: API_DOMAIN + '/sms',
   },
   [],
-  []
+  [],
 );
 
-
-export { baseInstance, adminInstance, messageInstance };
+export {
+  baseInstance,
+  adminInstance,
+  messageInstance,
+  ExamineInstance,
+  BookingInstance,
+};
